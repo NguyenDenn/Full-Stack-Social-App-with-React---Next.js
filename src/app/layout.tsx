@@ -9,6 +9,7 @@ import {
 } from "@clerk/nextjs";
 import localFont from "next/font/local";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,18 +34,26 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <SignedOut>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {" "}
+            {children}
+          </ThemeProvider>
+          {/* <SignedOut>
             <SignInButton mode="modal" />
             <SignUpButton mode="modal" />
           </SignedOut>
           <SignedIn>
             <UserButton />
-          </SignedIn>
-          {children}
+          </SignedIn> */}
         </body>
       </html>
     </ClerkProvider>
